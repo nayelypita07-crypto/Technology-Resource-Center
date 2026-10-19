@@ -1,0 +1,71 @@
+﻿@model TechnologyResourceCenter.Models.Space
+
+@{
+    ViewData["Title"] = "Detalles del espacio";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h3 mb-0">@Model.Name</h1>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">ID</dt>
+                <dd class="col-sm-8">@Model.Id</dd>
+
+                <dt class="col-sm-4">Ubicación</dt>
+                <dd class="col-sm-8">@Model.Location</dd>
+
+                <dt class="col-sm-4">Capacidad</dt>
+                <dd class="col-sm-8">@Model.Capacity personas</dd>
+
+                <dt class="col-sm-4">Tarifa por hora</dt>
+                <dd class="col-sm-8">
+                    @Model.HourlyRate.ToString("C2",
+                    System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                </dd>
+
+                <dt class="col-sm-4">Disponibilidad</dt>
+                <dd class="col-sm-8">@Model.GetAvailabilityStatus()</dd>
+            </dl>
+
+            <h5>Costo estimado de uso</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Horas</th>
+                        <th>Costo estimado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 hora</td>
+                        <td>
+                            @Model.CalculateUsageCost(1).ToString("C2",
+                            System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4 horas</td>
+                        <td>
+                            @Model.CalculateUsageCost(4).ToString("C2",
+                            System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8 horas</td>
+                        <td>
+                            @Model.CalculateUsageCost(8).ToString("C2",
+                            System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a asp-action="Index" class="btn btn-secondary">Volver a los espacios</a>
+            <a asp-action="Available" class="btn btn-success">Ver espacios disponibles</a>
+        </div>
+    </div>
+</div>

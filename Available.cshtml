@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TechnologyResourceCenter.Models.Space>
+
+@{
+    ViewData["Title"] = "Espacios disponibles";
+}
+
+<div class="container py-4">
+    <h1>Espacios tecnológicos disponibles</h1>
+    <p class="text-muted">Solo se muestran los espacios que actualmente están marcados como disponibles.</p>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">Actualmente no hay espacios disponibles.</div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-success">
+                        <div class="card-body">
+                            <h5>@item.Name</h5>
+                            <p><strong>Ubicación:</strong> @item.Location</p>
+                            <p><strong>Capacidad:</strong> @item.Capacity personas</p>
+                            <p>
+                                <strong>Tarifa por hora:</strong> @item.HourlyRate.ToString("C2",
+                                    System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                            </p>
+                            <span class="badge bg-success">DISPONIBLE</span>
+                            <div class="mt-3">
+                                <a asp-action="Details" asp-route-id="@item.Id"
+                                   class="btn btn-primary">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-4">Volver a los espacios</a>
+</div>
